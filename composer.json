@@ -41,7 +41,7 @@
         "echo \"post-create-project-cmd\"",
         "./vendor/bin/drush eval \"echo Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)\" > salt.txt",
         "php -r \"file_exists('docroot/sites/default/settings.php') || copy('docroot/sites/default/default.settings.php', 'docroot/sites/default/settings.php');\"",
-        "sed -i '' '754,757 s/^##*//' docroot/sites/default/settings.php || read -p 'Uncomment the last 3 lines from settings.php and press any key to cotinue'' -n1 -s",
+        "sed -i '' '754,757 s/^##*//' docroot/sites/default/settings.php || read -p 'Uncomment the last 3 lines from settings.php and press any key to cotinue' -n1 -s",
         "@init-project"
       ],
 			"post-install-cmd": [
