@@ -40,8 +40,8 @@
       "post-create-project-cmd": [
         "echo \"post-create-project-cmd\"",
         "./vendor/bin/drush eval \"echo Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)\" > salt.txt",
-        "sed -i '' '754,757 s/^##*//' docroot/sites/default/settings.php",
         "php -r \"file_exists('docroot/sites/default/settings.php') || copy('docroot/sites/default/default.settings.php', 'docroot/sites/default/settings.php');\"",
+        "sed -i '' '754,757 s/^##*//' docroot/sites/default/settings.php",
         "@init-project"
       ],
 			"post-install-cmd": [
