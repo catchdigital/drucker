@@ -1,5 +1,5 @@
 {
-    "name": "abesiyo/drucker",
+    "name": "catchdigital/drucker",
     "description": "Docker + drupal composer stack",
     "type": "project",
     "license": "MIT",
@@ -12,7 +12,7 @@
     "authors": [
       {
         "name": "Alberto Contreras",
-        "email": "abecontreras@me.com"
+        "email": "a.contreras@catchdigital.com"
       }
     ],
     "repositories": [
