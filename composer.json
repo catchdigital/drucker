@@ -1,6 +1,7 @@
 {
     "name": "abesiyo/drucker",
     "description": "Docker + drupal composer stack",
+    "version": "1.0.0",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
@@ -39,6 +40,7 @@
       "post-create-project-cmd": [
         "echo \"post-create-project-cmd\"",
         "./vendor/bin/drush eval \"echo Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)\" > salt.txt",
+        "sed -i '' '754,757 s/^##*//' docroot/sites/default/settings.php",
         "php -r \"file_exists('docroot/sites/default/settings.php') || copy('docroot/sites/default/default.settings.php', 'docroot/sites/default/settings.php');\"",
         "@init-project"
       ],
@@ -56,7 +58,7 @@
         "@install-drupal"
       ],
       "install-drupal": [
-        "drush si -y minimal --config-dir $(pwd)/config/sync"
+        "drush si -y minimal --config-dir ./config/sync"
       ],
       "run-docker": [
         "docker-compose up -d"

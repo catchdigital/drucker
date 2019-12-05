@@ -139,6 +139,5 @@ $settings['skip_permissions_hardening'] = TRUE;
  * Location of the site configuration files.
  */
 $config_directories = array(
-  CONFIG_SYNC_DIRECTORY => $env_dir . 'config/sync',
-  CONFIG_ACTIVE_DIRECTORY => $env_dir . 'config/active'
+  CONFIG_SYNC_DIRECTORY => $env_dir . 'config/sync'
 );
