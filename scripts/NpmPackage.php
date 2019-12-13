@@ -20,7 +20,7 @@ class NpmPackage {
    * Event to echo output.
    */
   public static function npmInstall(Event $event) {
-      static::runNpmCommand('install', $event);
+    static::runNpmCommand('install', $event);
   }
 
   /**
@@ -47,9 +47,9 @@ class NpmPackage {
    */
   protected static function findNpmPackages($packageRoot) {
     // Find all npm instances in the package root,
-    // that are not contained in contrib, vendor or node_module directories.
+    // that are not contained in contrib modules, vendor or node_module directories.
     $finder = new Finder();
-    return $finder->in($packageRoot)->notPath("/core|contrib|vendor|node_modules/")->name("package.json");
+    return $finder->in($packageRoot)->notPath("/core|modules\/contrib|vendor|node_modules/")->name("package.json");
   }
 
   /**
