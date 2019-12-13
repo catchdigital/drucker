@@ -34,6 +34,11 @@
     "require-dev": {
     },
     "prefer-stable": true,
+    "autoload": {
+      "classmap": [
+        "scripts/NpmPackage.php"
+      ]
+    },
     "scripts": {
       "post-root-package-install": [
       ],
@@ -45,10 +50,12 @@
         "@init-project"
       ],
 			"post-install-cmd": [
-        "echo \"post-install-cmd\""
+        "echo \"post-install-cmd\"",
+        "@composer install-npm-libraries"
       ],
       "post-update-cmd": [
-        "echo \"post-update-cmd\""
+        "echo \"post-update-cmd\"",
+        "@composer install-npm-libraries"
       ],
       "init-project": [
         "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
@@ -62,6 +69,9 @@
       ],
       "run-docker": [
         "docker-compose up -d"
+      ],
+      "install-npm-libraries": [
+        "DrupalSkeletor\\NpmPackage::npmInstall"
       ]
     },
     "extra": {
@@ -78,7 +88,21 @@
         "docroot/themes/contrib/{$name}": [
           "type:drupal-theme"
         ],
-        "drush/contrib/{$name}": [
+        "docroot/modules/custom/{$name}": [
+          "type:drupal-custom-module"
+        ],
+        "docroot/profiles/custom/{$name}": [
+          "type:drupal-custom-profile"
+        ],
+        "docroot/themes/custom/{$name}": [
+          "type:drupal-custom-theme"
+        ],
+        "docroot/libraries/{$name}": [
+          "type:drupal-library",
+          "type:bower-asset",
+          "type:npm-asset"
+        ],
+        "drush/Commands/{$name}": [
           "type:drupal-drush"
         ]
       },
