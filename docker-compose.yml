@@ -16,7 +16,7 @@ services:
       - ./:/var/www/html:cached
 
   fpm:
-    image: catchdigital/php:7.2.8-fpm
+    image: catchdigital/php:7.4.4-fpm
     working_dir: /var/www/html/docroot
     env_file: .env
     expose:

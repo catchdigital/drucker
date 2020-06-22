@@ -1,111 +1,112 @@
 {
     "name": "catchdigital/drucker",
     "description": "Docker + drupal composer stack",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
     "config": {
-      "platorm": {
-        "php": "7.2.8"
-      }
+        "platorm": {
+            "php": "7.4.4"
+        }
     },
     "authors": [
-      {
-        "name": "Alberto Contreras",
-        "email": "a.contreras@catchdigital.com"
-      }
+        {
+            "name": "Alberto Contreras",
+            "email": "a.contreras@catchdigital.com"
+        },
+        {
+            "name": "Pierre Villette",
+            "email": "p.villette@catchdigital.com"
+        }
     ],
     "repositories": [
-      {
-        "type": "composer",
-        "url": "https://packages.drupal.org/8"
-      }
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
     ],
     "require": {
-        "composer/installers": "^1.2",
-        "drupal-composer/drupal-scaffold": "^2.2",
-        "cweagans/composer-patches": "~1.0",
-        "drupal/core": "^8.6",
-        "drush/drush": "~9",
-        "drupal/console": "~1.0",
-        "vlucas/phpdotenv": "^2.4"
+        "composer/installers": "^1.9",
+        "drupal-composer/drupal-scaffold": "^2.6",
+        "cweagans/composer-patches": "^1.6",
+        "drupal/core": "^9.0",
+        "drush/drush": "^10.2",
+        "vlucas/phpdotenv": "^5.0"
     },
-    "require-dev": {
-    },
+    "require-dev": {},
     "prefer-stable": true,
     "autoload": {
-      "classmap": [
-        "scripts/NpmPackage.php"
-      ]
+        "classmap": [
+            "scripts/NpmPackage.php"
+        ]
     },
     "scripts": {
-      "post-root-package-install": [
-      ],
-      "post-create-project-cmd": [
-        "echo \"post-create-project-cmd\"",
-        "./vendor/bin/drush eval \"echo Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)\" > salt.txt",
-        "php -r \"file_exists('docroot/sites/default/settings.php') || copy('docroot/sites/default/default.settings.php', 'docroot/sites/default/settings.php');\"",
-        "sed -i '' '754,757 s/^##*//' docroot/sites/default/settings.php || read -p 'Uncomment the last 3 lines from settings.php and press any key to cotinue' -n1 -s",
-        "@init-project"
-      ],
-			"post-install-cmd": [
-        "echo \"post-install-cmd\"",
-        "@composer install-npm-libraries"
-      ],
-      "post-update-cmd": [
-        "echo \"post-update-cmd\"",
-        "@composer install-npm-libraries"
-      ],
-      "init-project": [
-        "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-        "php -r \"file_exists('docroot/sites/default/settings.local.php') || copy('example.settings.local.php', 'docroot/sites/default/settings.local.php');\"",
-        "cd etc/nginx/ssl && openssl req -x509 -newkey rsa:4086 -subj \"/C=XX/ST=XXXX/L=XXXX/O=XXXX/CN=vm.localhost\" -keyout \"key.pem\" -out \"cert.pem\" -days 3650 -nodes -sha256",
-        "@run-docker",
-        "@install-drupal"
-      ],
-      "install-drupal": [
-        "drush si -y minimal --config-dir ./config/sync || drush si -y minimal"
-      ],
-      "run-docker": [
-        "docker-compose up -d"
-      ],
-      "install-npm-libraries": [
-        "DrupalSkeletor\\NpmPackage::npmInstall"
-      ]
+        "post-root-package-install": [],
+        "post-create-project-cmd": [
+            "echo \"post-create-project-cmd\"",
+            "./vendor/bin/drush eval \"echo Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)\" > salt.txt",
+            "php -r \"file_exists('docroot/sites/default/settings.php') || copy('docroot/sites/default/default.settings.php', 'docroot/sites/default/settings.php');\"",
+            "sed -i '' '769,772 s/^##*//' docroot/sites/default/settings.php || read -p 'Uncomment the last 3 lines from settings.php and press any key to continue' -n1 -s",
+            "@init-project"
+        ],
+        "post-install-cmd": [
+            "echo \"post-install-cmd\"",
+            "@composer install-npm-libraries"
+        ],
+        "post-update-cmd": [
+            "echo \"post-update-cmd\"",
+            "@composer install-npm-libraries"
+        ],
+        "init-project": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "php -r \"file_exists('docroot/sites/default/settings.local.php') || copy('example.settings.local.php', 'docroot/sites/default/settings.local.php');\"",
+            "cd etc/nginx/ssl && openssl req -x509 -newkey rsa:4086 -subj \"/C=XX/ST=XXXX/L=XXXX/O=XXXX/CN=vm.localhost\" -keyout \"key.pem\" -out \"cert.pem\" -days 3650 -nodes -sha256",
+            "@run-docker",
+            "@install-drupal"
+        ],
+        "install-drupal": [
+            "drush si -y minimal --config-dir ./config/sync || drush si -y minimal"
+        ],
+        "run-docker": [
+            "docker-compose up -d"
+        ],
+        "install-npm-libraries": [
+            "DrupalSkeletor\\NpmPackage::npmInstall"
+        ]
     },
     "extra": {
-      "installer-paths": {
-        "docroot/core": [
-          "type:drupal-core"
-        ],
-        "docroot/modules/contrib/{$name}": [
-          "type:drupal-module"
-        ],
-        "docroot/profiles/contrib/{$name}": [
-          "type:drupal-profile"
-        ],
-        "docroot/themes/contrib/{$name}": [
-          "type:drupal-theme"
-        ],
-        "docroot/modules/custom/{$name}": [
-          "type:drupal-custom-module"
-        ],
-        "docroot/profiles/custom/{$name}": [
-          "type:drupal-custom-profile"
-        ],
-        "docroot/themes/custom/{$name}": [
-          "type:drupal-custom-theme"
-        ],
-        "docroot/libraries/{$name}": [
-          "type:drupal-library",
-          "type:bower-asset",
-          "type:npm-asset"
-        ],
-        "drush/Commands/{$name}": [
-          "type:drupal-drush"
-        ]
-      },
-      "patches": { }
+        "installer-paths": {
+            "docroot/core": [
+                "type:drupal-core"
+            ],
+            "docroot/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "docroot/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "docroot/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "docroot/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "docroot/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
+            ],
+            "docroot/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
+            ],
+            "drush/Commands/{$name}": [
+                "type:drupal-drush"
+            ]
+        },
+        "patches": {}
     }
 }

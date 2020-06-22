@@ -1,8 +1,8 @@
 <?php
 
-$env_dir = DRUPAL_ROOT . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR ;
+$env_dir = DRUPAL_ROOT . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
 if (class_exists('\Dotenv\Dotenv') && file_exists($env_dir . '.env')) {
-  $dotenv = new \Dotenv\Dotenv($env_dir);
+  $dotenv = \Dotenv\Dotenv::createImmutable($env_dir);
   $dotenv->load();
 } else {
   echo 'Please, run composer install and try again.';
@@ -23,25 +23,25 @@ if (class_exists('\Dotenv\Dotenv') && file_exists($env_dir . '.env')) {
  * at the bottom of 'sites/example.com/settings.php'.
  */
 
- /**
-  * Database settings:
-  *
-  */
- $databases['default']['default'] = array (
-   'database' => getenv('DB_DATABASE'),
-   'username' => getenv('DB_USERNAME'),
-   'password' => getenv('DB_PASSWORD'),
-   'prefix' => '',
-   'host' => getenv('DB_HOST'),
-   'port' => getenv('DB_PORT'),
-   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-   'driver' => 'mysql',
- );
+/**
+ * Database settings:
+ *
+ */
+$databases['default']['default'] = [
+  'database' => $_ENV['DB_DATABASE'],
+  'username' => $_ENV['DB_USERNAME'],
+  'password' => $_ENV['DB_PASSWORD'],
+  'prefix' => '',
+  'host' => $_ENV['DB_HOST'],
+  'port' => $_ENV['DB_PORT'],
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+];
 
- /**
-  * Salt for one-time login links, cancel links, form tokens, etc.
-  */
- $settings['hash_salt'] = file_get_contents($env_dir . 'salt.txt');
+/**
+ * Salt for one-time login links, cancel links, form tokens, etc.
+ */
+$settings['hash_salt'] = file_get_contents($env_dir . 'salt.txt');
 
 /**
  * Assertions.
@@ -138,6 +138,4 @@ $settings['skip_permissions_hardening'] = TRUE;
 /**
  * Location of the site configuration files.
  */
-$config_directories = array(
-  CONFIG_SYNC_DIRECTORY => $env_dir . 'config/sync'
-);
+$settings['config_sync_directory'] = $env_dir . 'config/sync';
