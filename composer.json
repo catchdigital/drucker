@@ -30,9 +30,9 @@
         "composer/installers": "^1.9",
         "drupal-composer/drupal-scaffold": "^2.6",
         "cweagans/composer-patches": "^1.6",
-        "drupal/core": "^9.0",
         "drush/drush": "^10.2",
-        "vlucas/phpdotenv": "^5.0"
+        "vlucas/phpdotenv": "^5.0",
+        "drupal/core-recommended": "^9.0"
     },
     "require-dev": {},
     "prefer-stable": true,
