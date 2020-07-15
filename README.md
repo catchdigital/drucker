@@ -7,13 +7,13 @@ Docker compose kick-starting set.
 ## Set up
 
 * **NGINX**: Latest from docker hub.
-* **PHP 7-fpm**: Optimized version 7.1.10
+* **PHP 7-fpm**: Optimized version 7.4.4
 * **Percona**: Version 5.7
 
 ## Running the project
 
 Get the project with composer:
-`composer create-project abesiyo/drucker`
+`composer create-project catchdigital/drucker`
 
 Uncomment the last 3 lines of the settings.php to include the local.settings.php with the docker configuration.
 
