@@ -1,7 +1,6 @@
 {
     "name": "catchdigital/drucker",
     "description": "Docker + drupal composer stack",
-    "version": "2.1.0",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
@@ -28,7 +27,6 @@
     ],
     "require": {
         "composer/installers": "^1.9",
-        "drupal-composer/drupal-scaffold": "^2.6",
         "cweagans/composer-patches": "^1.6",
         "drush/drush": "^10.2",
         "vlucas/phpdotenv": "^5.0",
