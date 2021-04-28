@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  nginx:
+  server:
     image: nginx:latest
     working_dir: /var/www/html/docroot
     ports:
