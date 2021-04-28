@@ -51,5 +51,8 @@ core/phpunit.xml
 # Ignore PHPStorm files
 .idea
 
+# Mac files
+.DS_Store
+
 # Local certificates
 etc/nginx/**/*.pem
