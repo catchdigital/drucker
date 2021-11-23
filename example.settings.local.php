@@ -1,9 +1,11 @@
 <?php
 
-$env_dir = DRUPAL_ROOT . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
+$env_dir = DRUPAL_ROOT . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR ;
 if (class_exists('\Dotenv\Dotenv') && file_exists($env_dir . '.env')) {
-  $dotenv = \Dotenv\Dotenv::createImmutable($env_dir);
+  $dotenv = Dotenv\Dotenv::createImmutable(DRUPAL_ROOT, '..' . DIRECTORY_SEPARATOR . '.env');
   $dotenv->load();
+  // $dotenv = new \Dotenv\Dotenv($env_dir);
+  // $dotenv->load();
 } else {
   echo 'Please, run composer install and try again.';
   return;
@@ -25,14 +27,13 @@ if (class_exists('\Dotenv\Dotenv') && file_exists($env_dir . '.env')) {
 
 /**
  * Database settings:
- *
  */
 $databases['default']['default'] = [
   'database' => $_ENV['DB_DATABASE'],
   'username' => $_ENV['DB_USERNAME'],
   'password' => $_ENV['DB_PASSWORD'],
   'prefix' => '',
-  'host' => $_ENV['DB_HOST'],
+  'host' => $_ENV['APP_URL'],
   'port' => $_ENV['DB_PORT'],
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
@@ -135,7 +136,4 @@ $settings['rebuild_access'] = TRUE;
  */
 $settings['skip_permissions_hardening'] = TRUE;
 
-/**
- * Location of the site configuration files.
- */
-$settings['config_sync_directory'] = $env_dir . 'config/sync';
+$settings['file_private_path'] = DRUPAL_ROOT . '/sites/default/files/private';
