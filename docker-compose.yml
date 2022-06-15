@@ -9,7 +9,6 @@ services:
       - "443:443"
     links:
       - db:${APP_URL}
-      - fpm
     depends_on:
       - fpm
       - db:
