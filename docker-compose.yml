@@ -20,7 +20,7 @@ services:
       - ./docroot:/var/www/html/docroot:cached
 
   fpm:
-    image: catchdigital/php:7.4.25-fpm
+    image: catchdigital/php:8.1.5-fpm-dev
     working_dir: /var/www/html/docroot
     env_file: .env
     expose:
