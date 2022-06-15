@@ -12,7 +12,6 @@ services:
     depends_on:
       - fpm
       - db
-      - memcached
     volumes:
       - ./etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:delegated
       - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf:delegated

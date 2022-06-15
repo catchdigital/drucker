@@ -79,7 +79,7 @@
             "drush si -y minimal --config-dir ./config/sync || drush si -y minimal"
         ],
         "run-docker": [
-            "docker-compose up -d server"
+            "docker compose up -d server"
         ],
         "install-npm-libraries": [
             "DrupalSkeletor\\NpmPackage::npmInstall"
