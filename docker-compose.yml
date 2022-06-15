@@ -10,6 +10,10 @@ services:
     links:
       - db:${APP_URL}
       - fpm
+    depends_on:
+      - fpm
+      - db:
+          condition: service_healthy
     volumes:
       - ./etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:delegated
       - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf:delegated
@@ -39,6 +43,10 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
   # memcached:
   #   image: memcached:1.6.12-alpine
