@@ -49,7 +49,7 @@ In oder to add dynamically the dependencies for each entrypoint, you should add 
  */
 function hook_library_info_alter(&$libraries, $extension) {
   // We only want to modify current theme extensions
-  if ($extension === '${theme') {
+  if ($extension === '${theme}') {
     // Load chunks dependencies from stats file.
     $stats = file_get_contents(DRUPAL_ROOT . "/../webpack.stats.json");
     $stats = Json::decode($stats);
@@ -62,6 +62,37 @@ function hook_library_info_alter(&$libraries, $extension) {
       }
     }
   }
+}
+
+function addNewLibrary($libraries, $reqAssets, $name) {
+  foreach($reqAssets as $asset) {
+    $requireLib = str_replace('.bundle.js', '', $asset['name']);
+    // Dependency exists?
+    if (empty($libraries["asset-$requireLib"])) {
+      $filename = "build/" . $asset['name'];
+      $libraries["asset-$requireLib"] = [
+        "js" => [
+          $filename => []
+        ]
+      ];
+      $excludedLibraries = ["500", "396"];
+      if (in_array($requireLib, $excludedLibraries)) {
+        $libraries["asset-$requireLib"]["js"][$filename] = [
+          "minified" => false,
+          "attributes" => [
+            "async" => true,
+            "defer" => true
+          ]
+        ];
+      }
+    }
+    if (isset($libraries[$name]['dependencies'])) {
+      $libraries[$name]['dependencies'][] = "${theme}/asset-$requireLib";
+    } else {
+      $libraries[$name]['dependencies'] = ["${theme}/asset-$requireLib"];
+    }
+  }
+  return $libraries;
 }
 ```
 
