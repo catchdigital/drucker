@@ -27,7 +27,7 @@ services:
     links:
       - db:${APP_URL}
     volumes:
-      - ./docker/etc/php/config.ini:/usr/local/etc/php/conf.d/x-config.ini:cached
+      - ./etc/php/config.ini:/usr/local/etc/php/conf.d/x-config.ini:cached
       - ./.:/var/www/html:cached
 
   db:
