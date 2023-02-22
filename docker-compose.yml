@@ -19,7 +19,7 @@ services:
       - ./docroot:/var/www/html/docroot:cached
 
   fpm:
-    image: catchdigital/php:8.1.5-fpm-dev
+    image: catchdigital/php:8.1.8-fpm-dev
     working_dir: /var/www/html/docroot
     env_file: .env
     expose:
@@ -31,7 +31,7 @@ services:
       - ./.:/var/www/html:cached
 
   db:
-    image: mariadb:10.6
+    image: mariadb:10.11
     ports:
       - "3306:3306"
     volumes:
@@ -46,7 +46,7 @@ services:
   #   image: memcached:1.6.12-alpine
 
   # node-sass:
-  #   image: catchdigital/awscli:2.3.0
+  #   image: catchdigital/toolbox:1.2.0
   #   user: '1000'
   #   command: bash -c "npm install && npm run build"
   #   working_dir: /var/www/html/docroot/themes/custom/catchify_theme
