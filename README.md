@@ -7,8 +7,8 @@ Docker compose kick-starting set.
 ## Set up
 
 * **NGINX**: Latest from docker hub.
-* **PHP 7-fpm**: Optimized version 7.4.4
-* **Percona**: Version 5.7
+* **PHP 8-fpm**: Optimized version 8.1.8
+* **Mariadb**: Version 10.11
 
 ## Create a the project
 
