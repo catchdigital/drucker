@@ -17,7 +17,7 @@ services:
       - ./docroot:/var/www/html/docroot:cached
 
   fpm:
-    image: catchdigital/php:8.1.8-fpm-dev
+    image: catchdigital/php:8.2.19-fpm-dev
     working_dir: /var/www/html/docroot
     env_file: .env
     expose:
@@ -29,22 +29,35 @@ services:
       - ./.:/var/www/html:cached
 
   db:
-    image: mariadb:10.11
+    image: mariadb:11.4
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
        - drucker-mariadb:/var/lib/mysql
-       - ./etc/mysql/conf.d:/etc/mysql/conf.d:cached
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
 
+  storybook:
+    image: catchdigital/toolbox:1.4.0
+    working_dir: /var/www/html
+    env_file: .env
+    command: bash -c "npm install && npm run storybook"
+    ports:
+      - "6006:6006"
+    expose:
+      - 6006
+    depends_on:
+      - server
+    volumes:
+      - ./.:/var/www/html:cached
+
   # memcached:
   #   image: memcached:1.6.12-alpine
 
   # node-sass:
-  #   image: catchdigital/toolbox:1.2.0
+  #   image: catchdigital/toolbox:1.4.0
   #   user: '1000'
   #   command: bash -c "npm install && npm run build"
   #   working_dir: /var/www/html/docroot/themes/custom/catchify_theme
