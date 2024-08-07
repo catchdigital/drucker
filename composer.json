@@ -75,7 +75,7 @@
             "@install-drupal"
         ],
         "install-drupal": [
-            "drush si -y minimal --config-dir ./config/sync || drush si -y minimal"
+            "drush @local si -y minimal --existing-config || drush @local si -y minimal"
         ],
         "run-docker": [
             "docker compose up -d server"
