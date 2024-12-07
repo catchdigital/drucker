@@ -6,14 +6,16 @@
     "minimum-stability": "dev",
     "config": {
         "platform": {
-            "php": "8.1"
+            "php": "8.3"
         },
         "allow-plugins": {
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true
         }
     },
     "authors": [
@@ -29,17 +31,17 @@
         }
     ],
     "require": {
-        "composer/installers": "^1.9",
-        "drupal/core-composer-scaffold": "^10",
-        "drupal/core-project-message": "^10",
-        "drupal/core-recommended": "^10",
+        "composer/installers": "^2.3",
+        "drupal/core-composer-scaffold": "^10.3",
+        "drupal/core-project-message": "^10.3",
+        "drupal/core-recommended": "^10.3",
+        "drupal/storybook": "^1.0@beta",
         "cweagans/composer-patches": "^1.6",
-        "drush/drush": "^11",
+        "drush/drush": "^13",
         "vlucas/phpdotenv": "^5.0"
     },
     "require-dev": {
-        "drupal/core-dev": "^10",
-        "drupal/twig_vardumper": "^3.1"
+        "drupal/core-dev": "^10.3"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -56,7 +58,7 @@
             "echo \"post-create-project-cmd\"",
             "./vendor/bin/drush eval \"echo Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)\" > salt.txt",
             "php -r \"file_exists('docroot/sites/default/settings.php') || copy('docroot/sites/default/default.settings.php', 'docroot/sites/default/settings.php');\"",
-            "sed -i '' '814,816 s/^##*//' docroot/sites/default/settings.php || read -p 'Uncomment the last 3 lines from settings.php and press any key to continue' -n1 -s",
+            "sed -i '' '889,892 s/^##*//' docroot/sites/default/settings.php || read -p 'Uncomment the last 3 lines from settings.php and press any key to continue' -n1 -s",
             "@init-project"
         ],
         "post-install-cmd": [
@@ -73,7 +75,7 @@
             "@install-drupal"
         ],
         "install-drupal": [
-            "drush si -y minimal --config-dir ./config/sync || drush si -y minimal"
+            "drush @local si -y minimal --existing-config || drush @local si -y minimal"
         ],
         "run-docker": [
             "docker compose up -d server"
